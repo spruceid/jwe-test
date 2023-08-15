@@ -5,7 +5,7 @@ async function main() {
     const priv = await JWK.createKey('EC', 'P-256');
 
     // assuming, encrypter receives public key of receiver, e.g., through jwks, jwks_uri
-    const pub = await JWK.asKey(priv.toJSON());
+    const pub = await JWK.asKey(priv.toJSON(), 'public');
     const mdocNonce = base64url("d4fDF34450023_$%");
     const apvValue = base64url("SKReader");
 
@@ -35,8 +35,8 @@ async function main() {
         }})).final()
 
     console.log('encrypted: ', encrypted);
-    console.log('static pub key: ', JSON.stringify(pub));
-    console.log('static priv key: ', JSON.stringify(priv));
+    console.log('static pub key: ', pub.toJSON());
+    console.log('static priv key: ', priv.toJSON(true));
 
     // now we decrypt using the private key
 
